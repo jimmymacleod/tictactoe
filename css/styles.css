@@ -128,3 +128,20 @@ body {
 .selected {
   background-color: pink;
 }
+
+/* /////////////////////////////////////////////////// */
+
+/* New Game */
+
+.newGame {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 35px 0 0;
+  position: relative;
+  top: 150px;
+}
+
+.newGame button {
+  width: 100px;
+  height: 50px;
+}

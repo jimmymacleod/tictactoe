@@ -19,6 +19,8 @@
 let createTileBtn;
 let rowIndex;
 
+let board = [];
+
 $("document").ready(function() {
   let $numberOfRows = 3;
   let $numberOfColumns = 3;
@@ -55,76 +57,134 @@ $("document").ready(function() {
   });
 
   const ticTac = {
-    //create method to select player.
-
+    count: 0,
+    switchPlayer: function() {
+      if (!$Xselect.hasClass("selected") && !$0select.hasClass("selected")) {
+        alert("select player");
+      }
+      if ($Xselect.hasClass("selected")) {
+        $Xselect.removeClass("selected");
+        $0select.addClass("selected");
+        player = "oClicked";
+      } else {
+        $Xselect.addClass("selected");
+        $0select.removeClass("selected");
+        player = "xClicked";
+      }
+    },
     createBoard: function($numberOfRows, $numberOfColumns, $winnerStreak) {
-      const switchPlayer = function() {
-        if (!$Xselect.hasClass("selected") && !$0select.hasClass("selected")) {
-          alert("select player");
+      const createRow = function($numberOfRows, $numberOfColumns) {
+        for (let i = 0; i < $numberOfRows; i++) {
+          let rowArray = [];
+          $newRow = $("<div/>", { class: "gameRow", id: i });
+          $(".gameBoard").append($newRow);
+          for (let j = 0; j < $numberOfColumns; j++) {
+            let btnId = "" + i + "-" + j;
+            let newBtn = $("<button/>", {
+              class: "boardBtn",
+              id: btnId
+            });
+            let row = $("#" + i);
+            $("#" + i).append(newBtn);
+            // $("#" + btnId).on("click", playMove(btnId));
+            rowArray.push(btnId);
+          }
+          board.push(rowArray);
         }
-        if ($Xselect.hasClass("selected")) {
-          $Xselect.removeClass("selected");
-          $0select.addClass("selected");
-          console.log("whats going on!");
-          player = "oClicked";
-        } else {
-          $Xselect.addClass("selected");
-          $0select.removeClass("selected");
-          player = "xClicked";
-        }
+        console.log(board);
       };
 
-      const createTileBtn = function(row, columnIndex) {
-        rowIndex = row.match(/\d+/) - 1;
-        let btnId = "" + rowIndex + "-" + columnIndex;
-        let newBtn = $("<button/>", {
-          class: "boardBtn",
-          id: btnId
-        });
-        $("#" + row).append(newBtn);
-        // addClickClass(rowIndex, columnIndex);
-      };
+      createRow(3, 3);
+    },
 
-      //Create a new array for each row, creating buttons on the board
+    //Newboard function to replace
 
-      let newArr1 = [];
-      let newArr2 = [];
-      let newArr3 = [];
+    clearBoard: function() {
+      $("#new-game").on("click", function() {
+        // $(".boardBtn").removeClass("oClicked xClicked");
+        //Hard coded
+        $("#0, #1, #2").remove();
+        ticTac.createBoard(3, 3, 0);
+        ticTac.addPlayer();
 
-      for (let i = 0; i < $numberOfColumns; i++) {
-        newArr1.push("n");
-        createTileBtn("row1", i);
-      }
-
-      for (let i = 0; i < $numberOfColumns; i++) {
-        newArr2.push("n");
-        createTileBtn("row2", i);
-      }
-
-      for (let i = 0; i < $numberOfColumns; i++) {
-        newArr3.push("n");
-        createTileBtn("row3", i);
-      }
-
-      $(".boardBtn").on("click", function() {
-        console.log("tile clicked");
-        $(this).addClass(player);
-        switchPlayer();
+        ///////////////////////////////////////////////////////////////////////
+        newBoard = board.slice(3);
+        console.table(newBoard);
+        // this.resetArrayBoard();
       });
+    },
 
-      console.log(newArr1);
-      console.log(newArr2);
-      console.log(newArr3);
+    addPlayer: function() {
+      $(".boardBtn").on("click", function() {
+        $(this).addClass(player);
+        ticTac.switchPlayer();
+        ticTac.playMove(player);
+      });
+    },
 
-      //Create an array for each row;
-      // Create buttons for each element in corresponding rows.
-
-      //In the create board function we are creating the gui board and also creating the arrays that will work with the javascript.
-      //First create a function that when called will add the correct amount of buttons to the gameRow.
+    playMove: function(player) {
+      if (this.count >= 1) {
+        let btnId = event.target.id;
+        btnId = btnId.split("-");
+        let x = btnId[0];
+        let y = btnId[1];
+        if (player === "oClicked") {
+          board[x][y] = "X";
+          console.log(btnId);
+        }
+        if (player === "xClicked") {
+          board[x][y] = "O";
+          console.log(btnId);
+        }
+      }
+      this.count++;
     }
+
+    //Create boardRules function
+    //When a button is hit, take the id and get the row and index.
+    // board[1][1] = id="1-1"
+    // the function must then check the surrounding elements of the board for a X or O.
+    //Get it working for the
+
+    // playMove: function(btnId) {
+    //   // $("#" + btnId).on("click", function() {
+    //   //replace the btnId in the board with a X/0.
+    //   //create two variable from btnId
+    //   btnId = btnId.split("-");
+    //   let x = btnId[0];
+    //   let y = btnId[1];
+    //   board[x][y] = "X";
+    //   // });
+    //   console.log(btnId);
+    // }
   };
+  // const playMove = function(btnId) {
+  //   // $("#" + btnId).on("click", function() {
+  //   //replace the btnId in the board with a X/0.
+  //   //create two variable from btnId
+  //   btnId = btnId.split("-");
+  //   let x = btnId[0];
+  //   let y = btnId[1];
+  //   board[x][y] = "X";
+  //   // });
+  //   console.log(btnId);
+  // };
 
+  ticTac.clearBoard();
   ticTac.createBoard($numberOfRows, $numberOfColumns, $winningStreak);
+  ticTac.addPlayer();
+  //
+  // $(".boardBtn").on("click", playMove() {
+  //   // get the particular id of this element
+  //   let btnId = event.target.id;
+  //   console.log(btnId);
+  //   btnId = btnId.split("-");
+  //   let x = btnId[0];
+  //   let y = btnId[1];
+  //
+  //   board[x][y] = "X";
+  //   // });
+  //   console.log(btnId);
+  // });
+  // ticTac.playMove("1-1");
 });
-
-//
