@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  /* border: 1px solid black; */
+}
+
+body {
+  border: 1px solid black;
+}
+
+.container {
+  width: 70%;
+  min-width: 750px;
+  height: 100vh;
+  background-color: springgreen;
+  margin: auto;
+}
+
+/* Game creator styles below  */
+.controller {
+  width: 400px;
+  height: 250px;
+  background-color: wheat;
+  border: 2px solid gray;
+  position: relative;
+  top: 25%;
+  margin: auto;
+  /* manipulated */
+  display: none;
+}
+
+.controller h3 {
+  margin: 5px;
+  margin-left: 32.5%;
+  display: inline-block;
+}
+
+.controllerInputs {
+  height: 130px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.controllerInputBox {
+  width: 30%;
+  height: 100%;
+}
+
+.startGame {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#startGameBtn {
+  padding: 7px;
+}
+
+.controllerInputBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.controllerInput {
+  width: 100px;
+  height: 100px;
+}
+
+/* /////////////////////////////////////////////// */
+
+.gameBoard {
+  width: 400px;
+  height: 400px;
+  background-color: darkorange;
+  position: relative;
+  top: 20%;
+  margin: auto;
+  flex-direction: column;
+  /* manipulated */
+  display: flex;
+}
+
+.gameRow {
+  width: 100%;
+  height: 33.33%;
+}
+
+.boardBtn {
+  height: 100%;
+  width: 33.33%;
+  border-radius: 3%;
+  border: 2px solid #1f628d;
+  /* background: none; */
+}
+
+.boardBtn:hover {
+  background: #3cb0fd;
+}
+
+.oClicked {
+  /* background-color: none; */
+  background-image: url(../images/zero.png) !important;
+  background-size: cover !important;
+}
+
+.xClicked {
+  background-image: url(../images/xxx.png) !important;
+  background-size: cover !important;
+}
+.playerSelectors {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  position: relative;
+  left: 40px;
+  top: 250px;
+  border: none;
+}
+.playerSelector {
+  height: 100px;
+  width: 100px;
+  background-color: gray;
+}
+
+.selected {
+  background-color: pink;
+}
