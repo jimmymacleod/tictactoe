@@ -129,22 +129,18 @@ $("document").ready(function() {
       createDiagArrs();
       // console.log(diagonalArr2);
       // console.log(diagonalArr1);
-
       for (let i = 0; i < 2; i++) {
         if ((i = 0)) {
           winningCom = winnerArrX.join();
         } else {
           winningCom = winnerArrO.join();
         }
+
         if (
-          board[x].join() === winnerArrX.join() ||
-          board[x].join() === winnerArrO.join() ||
-          diagonalArr1.join() === winnerArrX.join() ||
-          diagonalArr1.join() === winnerArrO.join() ||
-          diagonalArr2.join() === winnerArrX.join() ||
-          diagonalArr2.join() === winnerArrO.join() ||
-          vertArrs[y].join() === winnerArrO.join() ||
-          vertArrs[y].join() === winnerArrX.join()
+          board[x].join() === winningCom ||
+          diagonalArr1.join() === winningCom ||
+          diagonalArr2.join() === winningCom ||
+          vertArrs[y].join() === winningCom
         ) {
           console.log("winner");
         }
