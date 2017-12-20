@@ -20,6 +20,8 @@ let createTileBtn;
 let rowIndex;
 
 let board = [];
+let winnerArrX = ["X", "X", "X"];
+let winnerArrO = ["O", "O", "O"];
 
 $("document").ready(function() {
   let $numberOfRows = 3;
@@ -59,6 +61,8 @@ $("document").ready(function() {
   const ticTac = {
     count: 0,
     switchPlayer: function() {
+      //Start game with x selected
+      $Xselect.addClass("selected");
       if (!$Xselect.hasClass("selected") && !$0select.hasClass("selected")) {
         alert("select player");
       }
@@ -72,6 +76,7 @@ $("document").ready(function() {
         player = "xClicked";
       }
     },
+
     createBoard: function($numberOfRows, $numberOfColumns, $winnerStreak) {
       const createRow = function($numberOfRows, $numberOfColumns) {
         for (let i = 0; i < $numberOfRows; i++) {
@@ -86,22 +91,18 @@ $("document").ready(function() {
             });
             let row = $("#" + i);
             $("#" + i).append(newBtn);
-            // $("#" + btnId).on("click", playMove(btnId));
             rowArray.push(btnId);
           }
           board.push(rowArray);
         }
-        console.log(board);
       };
 
       createRow(3, 3);
     },
 
     //Newboard function to replace
-
     clearBoard: function() {
       $("#new-game").on("click", function() {
-        // $(".boardBtn").removeClass("oClicked xClicked");
         //Hard coded
         $("#0, #1, #2").remove();
         ticTac.createBoard(3, 3, 0);
@@ -118,7 +119,9 @@ $("document").ready(function() {
       $(".boardBtn").on("click", function() {
         $(this).addClass(player);
         ticTac.switchPlayer();
-        ticTac.playMove(player);
+        ticTac.playMove(player); //changes the element on board to X/O
+        let btnId = event.target.id;
+        ticTac.boardRules(btnId);
       });
     },
 
@@ -130,61 +133,171 @@ $("document").ready(function() {
         let y = btnId[1];
         if (player === "oClicked") {
           board[x][y] = "X";
-          console.log(btnId);
         }
         if (player === "xClicked") {
           board[x][y] = "O";
-          console.log(btnId);
         }
       }
       this.count++;
+    },
+
+    boardRules: function(btnId) {
+      btnId = btnId.split("-");
+      let x = btnId[0];
+      let y = btnId[1];
+      let diagonalArr1 = [];
+      let diagonalArr2 = [];
+      const diagArrs = function() {
+        diagonalArr1.push(board[0][0]);
+        diagonalArr1.push(board[1][1]);
+        diagonalArr1.push(board[2][2]);
+        diagonalArr2.push(board[0][2]);
+        diagonalArr2.push(board[1][1]);
+        diagonalArr2.push(board[2][0]);
+      };
+      diagArrs();
+      console.log(diagonalArr2);
+      console.log(diagonalArr1);
+      if (
+        board[x].join() === winnerArrX.join() ||
+        board[x].join() === winnerArrO.join() ||
+        diagonalArr1.join() === winnerArrX.join() ||
+        diagonalArr1.join() === winnerArrO.join() ||
+        diagonalArr2.join() === winnerArrX.join() ||
+        diagonalArr2.join() === winnerArrO.join()
+      ) {
+        console.log("winner");
+      }
     }
-
-    //Create boardRules function
-    //When a button is hit, take the id and get the row and index.
-    // board[1][1] = id="1-1"
-    // the function must then check the surrounding elements of the board for a X or O.
-    //Get it working for the
-
-    // playMove: function(btnId) {
-    //   // $("#" + btnId).on("click", function() {
-    //   //replace the btnId in the board with a X/0.
-    //   //create two variable from btnId
-    //   btnId = btnId.split("-");
-    //   let x = btnId[0];
-    //   let y = btnId[1];
-    //   board[x][y] = "X";
-    //   // });
-    //   console.log(btnId);
-    // }
   };
-  // const playMove = function(btnId) {
-  //   // $("#" + btnId).on("click", function() {
-  //   //replace the btnId in the board with a X/0.
-  //   //create two variable from btnId
-  //   btnId = btnId.split("-");
-  //   let x = btnId[0];
-  //   let y = btnId[1];
-  //   board[x][y] = "X";
-  //   // });
-  //   console.log(btnId);
-  // };
 
   ticTac.clearBoard();
   ticTac.createBoard($numberOfRows, $numberOfColumns, $winningStreak);
   ticTac.addPlayer();
-  //
-  // $(".boardBtn").on("click", playMove() {
-  //   // get the particular id of this element
-  //   let btnId = event.target.id;
-  //   console.log(btnId);
-  //   btnId = btnId.split("-");
-  //   let x = btnId[0];
-  //   let y = btnId[1];
-  //
-  //   board[x][y] = "X";
-  //   // });
-  //   console.log(btnId);
-  // });
-  // ticTac.playMove("1-1");
 });
+
+// btnId = btnId.split("-");
+// let x = btnId[0]; // first element of id
+// let y = btnId[1]; // secod Element of id
+// console.log(btnId);
+//
+// for (let y = 0; y < board.length; y++) {
+//   let row = board[y];
+//   let cells = row.length;
+//   for (var x = 0; x < cells; x++) {
+//     var cell = row[x];
+//     // console.log(board[y][x]);
+//   }
+
+// for (let i = 0; i < 3; i++) {}
+//
+// console.log(btnId);
+
+// playMove: function(btnId) {
+//   // $("#" + btnId).on("click", function() {
+//   //replace the btnId in the board with a X/0.
+//   //create two variable from btnId
+//   btnId = btnId.split("-");
+//   let x = btnId[0];
+//   let y = btnId[1];
+//   board[x][y] = "X";
+//   // });
+//   console.log(btnId);
+// }
+
+// const playMove = function(btnId) {
+//   // $("#" + btnId).on("click", function() {
+//   //replace the btnId in the board with a X/0.
+//   //create two variable from btnId
+//   btnId = btnId.split("-");
+//   let x = btnId[0];
+//   let y = btnId[1];
+//   board[x][y] = "X";
+//   // });
+//   console.log(btnId);
+// };
+
+//
+// $(".boardBtn").on("click", playMove() {
+//   // get the particular id of this element
+//   let btnId = event.target.id;
+//   console.log(btnId);
+//   btnId = btnId.split("-");
+//   let x = btnId[0];
+//   let y = btnId[1];
+//
+//   board[x][y] = "X";
+//   // });
+//   console.log(btnId);
+// });
+// ticTac.playMove("1-1");
+// tryThisOut: function(board, x, y) {
+//   var getCell = function(board, y, x) {
+//     var NO_VALUE = null;
+//     var value, hasValue;
+//
+//     try {
+//       hasValue = board[y][x] !== undefined;
+//       value = hasValue ? board[y][x] : NO_VALUE;
+//     } catch (e) {
+//       value = NO_VALUE;
+//     }
+//     return value;
+//   };
+//
+//   function surroundings(board, y, x) {
+//     // Directions are clockwise
+//     return {
+//       up: getCell(board, y - 1, x),
+//       upRight: getCell(board, y - 1, x + 1),
+//       right: getCell(board, y, x + 1),
+//       downRight: getCell(board, y + 1, x + 1),
+//       down: getCell(board, y + 1, x),
+//       downLeft: getCell(board, y + 1, x - 1),
+//       left: getCell(board, y, x - 1),
+//       upLeft: getCell(board, y - 1, x - 1)
+//     };
+//   }
+//
+//   const eachCell = (board, action, thisArg = null) => {
+//     baord.forEach((row, y) => {
+//       row.forEach((cell, x) => {
+//         action.call(thisArg, cell, y, x, board);
+//       });
+//     });
+//
+//     eachCell(board, function(cell, y, x, board) {
+//       console.log(
+//         "Adjacent cells to [" + y + ", " + x + "]: ",
+//         surroundings(board, y, x),
+//         "Current Value: " + cell + "."
+//       );
+//     });
+//   };
+// }
+
+// boardRules: function(btnId) {
+//   // btnId=1-1
+//   //board[1][1];
+//   //create varaibles to hold the x and y axis coordinates
+//   console.log(board);
+//   btnId = btnId.split("-");
+//   let x = btnId[0];
+//   let y = btnId[1];
+//   //Write a loop that loops through the immediate neighbors.
+//   for (let j = -1; j <= 1; j++) {
+//     for (let k = -1; k <= 1; k++) {
+//       let varX = x - j;
+//       let varY = y - k;
+//       if (board[varX][varY]) {
+//         console.log(
+//           `id= ${varX} ${varY} ---- board item: ${board[varX][varY]}`
+//         );
+//       }
+//       // if (board[varX][varY] === "O" || board[varX][varY] === "X") {
+//       //   console.log(
+//       //     `id= ${event.target.id} ---- board item: ${board[varX][varY]}`
+//       //   );
+//     }
+//   }
+// }
