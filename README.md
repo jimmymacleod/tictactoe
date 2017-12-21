@@ -19,7 +19,10 @@ When board || vertArrs || diagArrs is equal to the winnerArr variable a message 
 ##Know bugs:
 
 The create board controller functionality doesn’t work, the createBoard function is hard coded into the Javascript.
+
 If a tile button is clicked twice the player in the board array will change, but visual representation will not.
+
 There is no indication of a draw. The players can keep playing on the board, changing the elements to different players.
+
 The selector can be manipulated so that a player can play two goes in a row.
 upon
