@@ -40,13 +40,37 @@
 
 <!-- Game Board HTML -->
 <div class="play">
-  <div class="newGame">
-    <button id="new-game">New Game</button>
+  <div class="header">
+    <div class="controlZone">
+     <div class="scoreBoard">
+      <div class="player">
+        <h3>Player O</h3>
+        <h3 id="player-o-score">0</h3>
+      </div>
+      <div class="player">
+        <h3>Player X</h3>
+        <h3 id="player-x-score">0</h3>
+      </div>
+      <button id="new-game">New Game</button>
+     </div>
+    </div>
   </div>
-<div class="playerSelectors">
-  <button class="playerSelector oClicked" id="0-selector"></button>
-  <button class="playerSelector xClicked" id="X-selector"></button>
+
+    <div class="playerSelectors">
+      <button class="playerSelector oClicked" id="0-selector"></button>
+      <button class="playerSelector xClicked" id="X-selector"></button>
+
+
   </div>
+
+  <!-- <button id="new-game">New Game</button>
+  <div class="scoreBoard">
+    <h3>Scoreboard</h3>
+    <h3>Player O</h3>
+    <h3 id="player-o-score">0</h3>
+    <h3>Player X</h3>
+    <h3 id="player-x-score">0</h3>
+  </div> -->
   <div class="gameBoard">
     <!-- <div class="gameRow" id='0'> -->
 <!-- <button class='boardBtn' id='0, 0'></button> -->
@@ -64,10 +88,9 @@
 <!-- <button class='boardBtn' id='2, 1'></button> -->
 <!-- <button class='boardBtn' id='2, 2'></button> -->
     </div>
+
+
   </div>
-
-
-</div>
 
 
 

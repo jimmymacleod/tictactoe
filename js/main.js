@@ -1,21 +1,3 @@
-//Create file structuture
-
-//Create a createTicTac function that take takes three arguements: rows, columns, stack .
-//This function will create a board on the screen with the parameters set in the arguements.
-//The parameters should be defined in the gui display but accessable in the console.
-//For each row/columns arguement, the program will manipulate the DOM to create the board.
-
-//Create a boardObject
-//The board object will be defined by the values input by constructor.
-//The object will have a "rows" number of keys of "column" elements.
-//The default will be three rows of three elements.
-
-//
-
-//controller
-//Create code to get values from the controller input that will be used to set the board dimensions.
-
-//on clicking start-game-btn set the 3 variables with the values of their respective boxes.
 let createTileBtn;
 let rowIndex;
 let board = [];
@@ -32,6 +14,10 @@ $("document").ready(function() {
   let $winningStreak = 3;
   let $controller = $(".controller");
   let $play = $(".play");
+  let oScore = 0;
+  let xScore = 0;
+  $("#player-o-score").text(oScore);
+  $("#player-x-score").text(xScore);
 
   const $startBtn = $("button#start-game-btn");
   $numberOfRows = $("#controller-rows").val();
@@ -67,11 +53,11 @@ $("document").ready(function() {
       if ($Xselect.hasClass("selected")) {
         $Xselect.removeClass("selected");
         $0select.addClass("selected");
-        player = "oClicked";
+        player = "xClicked";
       } else {
         $Xselect.addClass("selected");
         $0select.removeClass("selected");
-        player = "xClicked";
+        player = "oClicked";
       }
     },
     createBoard: function($numberOfRows, $numberOfColumns, $winnerStreak) {
@@ -97,18 +83,14 @@ $("document").ready(function() {
       createRow(3, 3);
     },
     boardRules: function(btnId, player) {
+      console.log(btnId);
       btnId = btnId.split("-");
+      console.log(btnId);
       let x = btnId[0];
       let y = btnId[1];
+      console.log(y);
       vertArrs = [];
       diagArrs = [];
-
-      if (player === "oClicked") {
-        winnerArr = winnerArrO.join();
-      }
-      if (player === "xClicked") {
-        winnerArr = winnerArrX.join();
-      }
       for (let k = 0; k < 3; k++) {
         // Create vertical perspective arrays
         vertArrs.push([]);
@@ -127,8 +109,8 @@ $("document").ready(function() {
         }
         if (counter === 2) {
           for (let u = 0; u < 3; u++) {
-            y = board.length - u;
-            diagArrs[k].push(board[u][y - 1]);
+            o = board.length - u;
+            diagArrs[k].push(board[u][o - 1]);
           }
         }
       }
@@ -139,9 +121,21 @@ $("document").ready(function() {
         diagArrs[0].join() === winnerArr ||
         diagArrs[1].join() === winnerArr
       ) {
-        console.log("winner");
+        if (winner === x) {
+          xScore += 1;
+        }
+        if (winner === o) {
+          oScore += 1;
+        }
+        $("#player-o-score").text(oScore);
+        $("#player-x-score").text(xScore);
+        setTimeout(function() {
+          alert("You won");
+        }, 200);
+        console.log(winner);
       }
     },
+
     playMove: function() {
       if ($0select.hasClass("selected") || $Xselect.hasClass("selected")) {
         let btnId = event.target.id;
@@ -161,11 +155,9 @@ $("document").ready(function() {
   // Code snippet creates new bord upon click of new-game
   const newGame = function() {
     $("#new-game").on("click", function() {
-      //Hard coded
-      $("#0, #1, #2").remove();
+      $("#0, #1, #2").remove(); //!!!HardCoded
       $("board").empty();
-      ticTac.createBoard(3, 3, 0);
-      console.log(board);
+      ticTac.createBoard(3, 3, 0); //!!!HardCoded
       addEventHandlers();
     });
   };
@@ -184,4 +176,5 @@ $("document").ready(function() {
     });
   };
   addEventHandlers();
+  newGame();
 }); //End document ready
