@@ -1,5 +1,7 @@
 #TIC TAC BURNTOUT
 
+da link : https://jimmymacleod.github.io/tictactoe/
+
 ![Alt Text](https://media.giphy.com/media/406BrsGSpOKze/giphy.gif)
 
 Here is my Tic Tac Toe gameboard. The title of the game reflects the mental state that engulfed the creator upon coming to refactor. I designed the board to scale, creating the rows and columns using javascript, ideally input by the user. However, this created some problems for me over the course of the project.
