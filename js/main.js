@@ -20,33 +20,33 @@ let createTileBtn;
 let rowIndex;
 let board = [];
 let vertArrs = [];
-// let diagArrs = [];
+let diagArrs = [];
 
 let winnerArrX = ["X", "X", "X"];
 let winnerArrO = ["O", "O", "O"];
+let player;
 
 $("document").ready(function() {
   let $numberOfRows = 3;
   let $numberOfColumns = 3;
   let $winningStreak = 3;
   let $controller = $(".controller");
-  let $gameBoard = $(".gameBoard");
+  let $play = $(".play");
 
-  // const $startBtn = $("button#start-game-btn");
-  // console.log($startBtn);
-  // // $startBtn.on("click", function() {
-  //   console.log("working");
-  //   $numberOfRows = $("#controller-rows").val();
-  //   $numberOfColumns = $("#controller-columns").val();
-  //   $winningStreak = $("#controller-rows").val();
-  //   $controller.css("display", "none");
-  //   $gameBoard.css("display", "flex");
-  //   // $gameBoard.css('display')
-  // });
+  const $startBtn = $("button#start-game-btn");
+  $numberOfRows = $("#controller-rows").val();
+  $numberOfColumns = $("#controller-columns").val();
+  $winningStreak = $("#controller-rows").val();
+  // $controller.css("display", "block");
+  // $play.css("display", "none");
+
+  $startBtn.on("click", function() {
+    $controller.css("display", "none");
+    $play.css("display", "block");
+  });
 
   const $0select = $("#0-selector");
   const $Xselect = $("#X-selector");
-  let player;
 
   $0select.on("click", function() {
     $0select.addClass("selected");
@@ -61,6 +61,7 @@ $("document").ready(function() {
   });
 
   const ticTac = {
+    //Tic Tac Object stores
     count: 0,
     switchPlayer: function() {
       if ($Xselect.hasClass("selected")) {
@@ -73,7 +74,6 @@ $("document").ready(function() {
         player = "xClicked";
       }
     },
-
     createBoard: function($numberOfRows, $numberOfColumns, $winnerStreak) {
       board = [];
       const createRow = function($numberOfRows, $numberOfColumns) {
@@ -94,62 +94,71 @@ $("document").ready(function() {
           board.push(rowArray);
         }
       };
-
       createRow(3, 3);
     },
-
-    boardRules: function(btnId) {
+    boardRules: function(btnId, player) {
       btnId = btnId.split("-");
       let x = btnId[0];
       let y = btnId[1];
-      let diagonalArr1 = [];
-      let diagonalArr2 = [];
       vertArrs = [];
       diagArrs = [];
 
-      const createVertArrs = function() {
-        for (let k = 0; k < 3; k++) {
-          vertArrs.push([]);
+      if (player === "oClicked") {
+        winnerArr = winnerArrO.join();
+      }
+      if (player === "xClicked") {
+        winnerArr = winnerArrX.join();
+      }
+      for (let k = 0; k < 3; k++) {
+        // Create vertical perspective arrays
+        vertArrs.push([]);
+        for (let i = 0; i < 3; i++) {
+          vertArrs[k].push(board[i][k]);
+        }
+      }
+      counter = 0; //Create Diagonal perspectice arrays
+      for (let k = 0; k < 2; k++) {
+        diagArrs.push([]);
+        counter++;
+        if (counter === 1) {
           for (let i = 0; i < 3; i++) {
-            vertArrs[k].push(board[i][k]);
-            vertArrs[k].push(board[i][k]);
+            diagArrs[0].push(board[i][i]);
           }
         }
-      };
-      createVertArrs();
-
-      const createDiagArrs = function() {
-        diagonalArr1.push(board[0][0]);
-        diagonalArr1.push(board[1][1]);
-        diagonalArr1.push(board[2][2]);
-        diagonalArr2.push(board[0][2]);
-        diagonalArr2.push(board[1][1]);
-        diagonalArr2.push(board[2][0]);
-      };
-      createDiagArrs();
-      // console.log(diagonalArr2);
-      // console.log(diagonalArr1);
-      for (let i = 0; i < 2; i++) {
-        if ((i = 0)) {
-          winningCom = winnerArrX.join();
-        } else {
-          winningCom = winnerArrO.join();
+        if (counter === 2) {
+          for (let u = 0; u < 3; u++) {
+            y = board.length - u;
+            diagArrs[k].push(board[u][y - 1]);
+          }
         }
-
-        if (
-          board[x].join() === winningCom ||
-          diagonalArr1.join() === winningCom ||
-          diagonalArr2.join() === winningCom ||
-          vertArrs[y].join() === winningCom
-        ) {
-          console.log("winner");
+      }
+      if (
+        // Check for winner in all 8 arrays;
+        board[x].join() === winnerArr ||
+        vertArrs[y].join() === winnerArr ||
+        diagArrs[0].join() === winnerArr ||
+        diagArrs[1].join() === winnerArr
+      ) {
+        console.log("winner");
+      }
+    },
+    playMove: function() {
+      if ($0select.hasClass("selected") || $Xselect.hasClass("selected")) {
+        let btnId = event.target.id;
+        btnId = btnId.split("-");
+        let x = btnId[0];
+        let y = btnId[1];
+        console.log(player);
+        if (player === "oClicked") {
+          board[x][y] = "O";
+        } else {
+          board[x][y] = "X";
         }
       }
     }
-  };
-
+  }; // ticTac object
   ticTac.createBoard(3, 3, 0);
-
+  // Code snippet creates new bord upon click of new-game
   const newGame = function() {
     $("#new-game").on("click", function() {
       //Hard coded
@@ -160,37 +169,19 @@ $("document").ready(function() {
       addEventHandlers();
     });
   };
-
-  newGame();
-
+  // Code snippet adds event handles to the board buttons.
   const addEventHandlers = function() {
     $(".boardBtn").on("click", function() {
-      $(this).addClass(player);
-      playMove(player); //changes the element on board to X/O
-      let btnId = event.target.id;
-      ticTac.boardRules(btnId);
       if ($Xselect.hasClass("selected") || $0select.hasClass("selected")) {
         ticTac.switchPlayer();
+        $(this).addClass(player); //adds the visual represation to the board.
+        ticTac.playMove(player); //changes the element on board to X/O
+        let btnId = event.target.id;
+        ticTac.boardRules(btnId, player); //Checks for winner
       } else {
         alert("select player");
       }
     });
   };
-
   addEventHandlers();
-
-  const playMove = function() {
-    if ($0select.hasClass("selected") || $Xselect.hasClass("selected")) {
-      let btnId = event.target.id;
-      btnId = btnId.split("-");
-      let x = btnId[0];
-      let y = btnId[1];
-      console.log({ player });
-      if (player === "oClicked") {
-        board[x][y] = "O";
-      } else {
-        board[x][y] = "X";
-      }
-    }
-  };
-});
+}); //End document ready
