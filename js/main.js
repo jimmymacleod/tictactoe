@@ -129,6 +129,12 @@ $("document").ready(function() {
       setTimeout(function() {
         alert(`Player ${winnerMessage} won`);
       }, 200);
+      setTimeout(function() {
+        $(".gameBoard").empty();
+        $(".gameBoard").css("background", "none");
+        $(".gameBoard").css("background-image", "url(./images/therock.gif)");
+        $(".gameBoard").css("background-size", "cover");
+      }, 500);
     },
 
     playMove: function(player) {
