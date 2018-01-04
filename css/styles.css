@@ -1,170 +1,211 @@
 * {
   box-sizing: border-box;
-  margin: 0px;
+  margin: 0;
   /* border: 1px solid black; */
 }
 
-body {
-  border: 1px solid black;
-}
-
 .container {
-  width: 70%;
-  min-width: 750px;
+  margin: auto;
   height: 100vh;
-  background-color: springgreen;
-  margin: auto;
+  width: 900px;
+  border: 1px solid black;
+  align-content: center;
+  background: linear-gradient(dodgerblue, white);
 }
 
-/* Game creator styles below  */
-.controller {
-  width: 400px;
-  height: 250px;
-  background-color: wheat;
-  border: 2px solid gray;
-  position: relative;
-  top: 25%;
-  margin: auto;
-  /* manipulated */
-  display: block;
-}
-
-.controller h3 {
-  margin: 5px;
-  margin-left: 32.5%;
-  display: inline-block;
-}
-
-.controllerInputs {
-  height: 130px;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-}
-
-.controllerInputBox {
-  width: 30%;
-  height: 100%;
-}
-
-.startGame {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-#startGameBtn {
-  padding: 7px;
-}
-
-.controllerInputBox {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-}
-
-.controllerInput {
-  width: 100px;
-  height: 100px;
-}
-
-/* ScoreBoard  */
-.scoreBoard {
-  display: flex;
-  width: 40%;
-  justify-content: space-between;
-  position: relative;
-  top: 50px;
-  margin: auto;
-}
-
-#player-o-score,
-#player-x-score {
-  background-color: white;
-}
-
-/* /////////////////////////////////////////////// */
 h1 {
-  padding: 20px 0px 0px 20px;
+  /* border: 1px solid black; */
+  width: 450px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-left: 5px;
+  color: white;
+  font-family: "Teko", sans-serif;
+  background: dodgerblue;
 }
 
 .gameBoard {
-  width: 400px;
-  height: 400px;
-  background-color: darkorange;
-  position: relative;
-  top: 20%;
+  width: 450px;
+  height: 450px;
   margin: auto;
+  border: 1px solid limegreen;
+  display: flex;
   flex-direction: column;
-  /* manipulated */
-  display: flex;
-}
-
-.gameRow {
-  width: 100%;
-  height: 33.33%;
-}
-
-.boardBtn {
-  height: 100%;
-  width: 33.33%;
-  border-radius: 3%;
-  border: 2px solid #1f628d;
-  /* background: none; */
-}
-
-.boardBtn:hover {
-  background: #3cb0fd;
-}
-
-.oClicked {
-  /* background-color: none; */
-  background-image: url(../images/zero.png) !important;
-  background-size: cover !important;
-}
-
-.xClicked {
-  background-image: url(../images/xxx.png) !important;
-  background-size: cover !important;
-}
-
-.play {
-  display: none;
-}
-
-.playerSelectors {
-  display: flex;
   justify-content: space-between;
-  width: 90%;
-  position: relative;
-  left: 40px;
-  top: 250px;
-  border: none;
+  margin: 10px solid white;
 }
-.playerSelector {
-  height: 100px;
-  width: 100px;
-  background-color: gray;
+
+.controlBoard {
+  width: 450px;
+  height: 80px;
+  margin: 20px auto auto auto;
+  display: flex;
+  justify-content: space-around;
 }
 
 .selected {
-  background-color: pink;
+  background-color: red;
 }
 
-/* /////////////////////////////////////////////////// */
+.default {
+  background-color: none;
+}
 
-/* New Game */
+.messageBoard {
+  padding: 0px 0px 0px 30px;
+  width: 55%;
+  font-family: "Teko", sans-serif;
+  font-size: 30px;
+}
 
 .newGame {
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 35px 0 0;
-  position: relative;
-  top: 150px;
+  /* border: 1px solid dodgerblue; */
+  width: auto;
 }
 
-.newGame button {
-  width: 100px;
+.newGame h4 {
+  font-size: 7px;
+}
+
+#new-game {
+  width: 50px;
+  height: 20px;
+  float: right;
+  margin: 10px;
+}
+
+.player {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.playerToken {
+  width: 30px;
+  height: 30px;
+  /* background-color: gray; */
+}
+
+#X {
+  background-image: url(../images/squareX.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#O {
+  background-image: url(../images/squareO.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.scoreBoard {
+  flex-grow: 1;
+  display: flex;
+}
+
+.scoreCard {
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+.scoreCard h4 {
+  font-family: "Teko", sans-serif;
+  font-size: 30px;
+  display: inline;
+  margin: 0px 10px 0px 10px;
+}
+
+.score {
+  background-color: white;
+  border-radius: 5px;
+  margin-top: 3px;
   height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#Oscore,
+#Xscore {
+  color: dodgerblue;
+}
+
+.boardBtn {
+  height: auto;
+  width: auto;
+  border-radius: 3%;
+  border: 1px solid #1f628d;
+  margin: 0;
+  /* background: none; */
+}
+
+.gameRow {
+  flex-grow: 1;
+  display: flex;
+}
+
+.boardBtn {
+  flex-grow: 1;
+}
+
+.X {
+  background-image: url(../images/squareX.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.O {
+  background-image: url(../images/squareO.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#modal {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+  height: 100%;
+  width: 100%;
+}
+.modalconent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  width: 40%;
+  padding: 20px;
+}
+
+.modalInputs {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.controllerInputBox h4 {
+  font-size: 30px;
+  font-family: "Teko", sans-serif;
+  line-height: 95%;
+}
+
+.controllerInputBox {
+  width: 23%;
+}
+
+.controllerInput {
+  width: 100%;
+}
+
+#close-modal {
+  width: 100px;
+  height: 30px;
+  float: right;
+  margin: 10px 13px 0px 0px;
 }
