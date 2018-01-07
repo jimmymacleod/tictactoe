@@ -1,18 +1,3 @@
-let createBoard;
-let scoreBoard;
-let diagBoard;
-let playerMove;
-let togglePlayer;
-let clearBoard;
-let checkForWinner;
-let addEventHandlers;
-let player;
-let opposition;
-let count;
-let message;
-let checkForDraw;
-let board = [];
-
 $("document").ready(function() {
   let vertBoard = [],
     lastRowCall,
@@ -52,6 +37,7 @@ $("document").ready(function() {
     diagBoard = [];
     var W = board[0].length;
     var H = board.length;
+    var G = board.length;
     var starts = [];
     // Horizontal
     for (var i = 0; i < W; i++) {
@@ -61,11 +47,13 @@ $("document").ready(function() {
     for (var i = 1; i < H; i++) {
       starts.push([0, i]);
     }
-
+    // for (var i = 1; i <= G; i++) {
+    //   starts.push([i, G]);
+    // }
+    // console.log(starts);
     var validCoord = function(C) {
       return C[0] >= 0 && C[0] < W && C[1] < H;
     };
-
     var getDiag = function(start, dx) {
       var C = [start[0], start[1]]; // copy
       var diag = [];
@@ -125,6 +113,25 @@ $("document").ready(function() {
     return board;
   };
 
+  checkForDraw = function() {
+    let drawCount = 0;
+    parse = function(r) {
+      return parseFloat(r) * 2 * Math.PI;
+    };
+    for (let i = 0; i < board.length; i++) {
+      for (let k = 0; k < board[i].length; k++) {
+        if (!parse(board[i][k])) {
+          drawCount++;
+        }
+      }
+    }
+    if (drawCount === board.length * board[1].length) {
+      message("It's a draw");
+      console.log(drawCount);
+      window.setTimeout(clearBoard, 3000);
+    }
+  };
+
   playerMove = function(player, rowIndex, columnIndex) {
     if (
       board[rowIndex][columnIndex] === "X" ||
@@ -143,13 +150,6 @@ $("document").ready(function() {
     }
   };
 
-  // player = "X";
-  //From the selector we will get the player (either X or O)
-
-  //I must attach event handler to each of the boardBtns that calls playMove
-
-  // $(".boardBtn").on();
-
   clearBoard = function() {
     $(".gameBoard").empty();
     createBoard(lastRowCall, lastColumnCall);
@@ -165,41 +165,43 @@ $("document").ready(function() {
   };
 
   checkForWinner = function(player) {
+    winnerFunc = function(player) {
+      message(`${player} is the winner!!!`);
+      scoreBoard(player);
+      animate();
+      $(".boardBtn").off("click");
+      window.setTimeout(clearBoard, 3000);
+    };
     const winnerX = winStreak("X"),
       winnerO = winStreak("O");
-    for (let i = 0; i < board[0].length; i++) {
-      if (
-        board[i].join("").indexOf(winnerX) >= 0 ||
-        board[i].join("").indexOf(winnerO) >= 0
-      ) {
-        message(`${player} is the winner!!!`);
-        scoreBoard(player);
-        $(".boardBtn").off("click");
-        window.setTimeout(clearBoard, 3000);
+    const boards = [board, vertBoard, diagBoard];
+    for (let b = 0; b < boards.length; b++) {
+      for (let i = 0; i < boards[b].length; i++) {
+        if (
+          boards[b][i].join("").indexOf(winnerX) >= 0 ||
+          boards[b][i].join("").indexOf(winnerO) >= 0
+        ) {
+          winnerFunc(player);
+        } else {
+          checkForDraw();
+        }
       }
     }
-    for (let j = 0; j < vertBoard.length; j++) {
-      if (
-        vertBoard[j].join("").indexOf(winnerX) >= 0 ||
-        vertBoard[j].join("").indexOf(winnerO) >= 0
-      ) {
-        message(`${player} is the winner!!!`);
-        scoreBoard(player);
-        $(".boardBtn").off("click");
-        window.setTimeout(clearBoard, 3000);
-      }
-    }
-    for (let k = 0; k < diagBoard.length; k++) {
-      if (
-        diagBoard[k].join("").indexOf(winnerX) >= 0 ||
-        diagBoard[k].join("").indexOf(winnerO) >= 0
-      ) {
-        message(`${player} is the winner!!!`);
-        scoreBoard(player);
-        $(".boardBtn").off("click");
-        window.setTimeout(clearBoard, 3000);
-      }
-    }
+  };
+
+  animate = function() {
+    // console.log(Math.floor(Math.random() * board[0].length);
+    var randomIndex = Math.floor(
+      Math.random() * (board[1].length * board[1].length)
+    );
+    $(".boardBtn")
+      .eq(randomIndex)
+      .css({
+        "background-image": gifArr[Math.floor(Math.random() * gifArr.length)],
+        "background-size": "cover",
+        "background-repeat": "no-repeat",
+        "background-position": "center"
+      });
   };
 }); //End document ready
 
@@ -214,4 +216,10 @@ window.onload = function() {
   };
 };
 
-//////player selector
+let gifArr = [
+  "url(./images/bro_gifs/stalone.gif)",
+  "url(./images/bro_gifs/jackson.gif)",
+  "url(./images/bro_gifs/drake.gif)",
+  "url(./images/bro_gifs/jonny.gif)",
+  "url(./images/bro_gifs/nicolas.gif)"
+];

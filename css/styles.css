@@ -89,13 +89,13 @@ h1 {
 }
 
 #X {
-  background-image: url(../images/squareX.png);
+  background-image: url(../images/xmarker.png);
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 #O {
-  background-image: url(../images/squareO.png);
+  background-image: url(../images/omarker.png);
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -152,13 +152,13 @@ h1 {
 }
 
 .X {
-  background-image: url(../images/squareX.png);
+  background-image: url(../images/xmarker.png);
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 .O {
-  background-image: url(../images/squareO.png);
+  background-image: url(../images/omarker.png);
   background-repeat: no-repeat;
   background-size: contain;
 }
@@ -179,7 +179,7 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  width: 40%;
+  width: 440px;
   padding: 20px;
 }
 
